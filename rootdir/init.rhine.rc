@@ -69,9 +69,6 @@ on post-fs-data
     #Create directory for hostapd
     mkdir /data/hostapd 0770 system wifi
 
-    # Create /data/time folder for time-services
-    mkdir /data/time/ 0700 system system
-
     # Create directory used by audio subsystem
     mkdir /data/misc/audio 0770 audio audio
 
@@ -292,6 +289,9 @@ on boot
 
     #WCNSS enable
     write /dev/wcnss_wlan 1
+    
+    # TimeKeep
+    timekeep restore
 
 #SONY misc
 service tad_static /system/bin/tad_static /dev/block/mmcblk0 1,16
@@ -453,7 +453,3 @@ service charger /sbin/healthd -c
     critical
     seclabel u:r:healthd:s0
 
-service time_daemon /system/bin/time_daemon
-   class late_start
-   user root
-   group root
